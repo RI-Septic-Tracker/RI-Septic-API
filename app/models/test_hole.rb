@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TestHole < ApplicationRecord
   belongs_to :property
   has_many :user_test_holes
