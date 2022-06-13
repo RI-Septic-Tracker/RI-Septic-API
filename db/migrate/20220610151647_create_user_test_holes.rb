@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateUserTestHoles < ActiveRecord::Migration[5.2]
   def change
     create_table :user_test_holes do |t|
