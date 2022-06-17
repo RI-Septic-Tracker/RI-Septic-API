@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# creates property table
 class CreateProperties < ActiveRecord::Migration[5.2]
   def change
     create_table :properties do |t|
