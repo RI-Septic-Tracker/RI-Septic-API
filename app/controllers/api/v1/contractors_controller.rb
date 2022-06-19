@@ -1,5 +1,6 @@
 class Api::V1::ContractorsController < ApplicationController
   def index
-    binding.pry
+    users = User.where(inspector:false)
+    render json: UserSerializer.new(users)
   end
 end

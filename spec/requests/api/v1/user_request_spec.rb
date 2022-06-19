@@ -18,6 +18,8 @@ RSpec.describe 'User Requests' do
     get '/api/v1/contractors'
     expect(response).to be_successful
     contractors = JSON.parse(response.body, symbolize_names: true)
+    expect(contractors).to be_a Hash
+    # binding.pry
     end
   end
 end
