@@ -15,7 +15,7 @@ RSpec.describe 'User Requests' do
                           phone: "123456345",
                           email: "email22@email.com",
                           inspector:false)
-    get 'api/v1/contractors'
+    get '/api/v1/contractors'
     expect(response).to be_successful
     contractors = JSON.parse(response.body, symbolize_names: true)
     end
