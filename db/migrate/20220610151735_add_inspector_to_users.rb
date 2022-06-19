@@ -3,6 +3,6 @@
 # adds inspector status to user
 class AddInspectorToUsers < ActiveRecord::Migration[5.2]
   def change
-    add_column :users, :inspector, :boolean
+    add_column :users, :inspector, :string
   end
 end
