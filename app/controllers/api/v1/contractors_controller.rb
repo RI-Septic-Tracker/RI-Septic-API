@@ -6,7 +6,11 @@ module Api
     class ContractorsController < ApplicationController
       def index
         users = User.where(inspector: false)
-        render json: UserSerializer.new(users)
+        if users != []
+          render json: UserSerializer.new(users)
+        else
+          render json: { data: { message: 'well thats not right, try something different' } }, status: :bad_request
+        end
       end
     end
   end
