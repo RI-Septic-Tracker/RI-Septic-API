@@ -5,7 +5,7 @@
 require 'rails_helper'
 
 RSpec.describe 'User Requests' do
-  describe 'user index requests' do
+  describe 'contractor index requests' do
     it 'sends a list of all contractors and basic contact information' do
       User.create!(name: 'Rich',
                    city: 'Cumberland',
@@ -36,6 +36,54 @@ RSpec.describe 'User Requests' do
         expect(c[:attributes]).to have_key(:phone)
         expect(c[:attributes]).to have_key(:email)
       end
+    end
+
+    it 'ignores inspectors' do
+      User.create!(name: 'Rich',
+                   city: 'Cumberland',
+                   address: '123 fake st',
+                   phone: '123456',
+                   email: 'email@email.com',
+                   inspector: false)
+      User.create!(name: 'Charlie',
+                   city: 'Cumberland',
+                   address: '111  different fake st',
+                   phone: '123456345',
+                   email: 'email22@email.com',
+                   inspector: false)
+      User.create!(name: 'Alan',
+                   city: 'Foster',
+                   address: '111 second different fake st',
+                   phone: '123456345',
+                   email: 'email44@email.com',
+                   inspector: true)
+      get '/api/v1/contractors'
+      expect(response).to be_successful
+      contractors = JSON.parse(response.body, symbolize_names: true)
+      expect(contractors[:data].count).to eq(2)
+    end
+
+    it 'returns and error when no users exist' do
+      get '/api/v1/contractors'
+      expect(response.status).to eq(400)
+      expect(response.message).to eq('Bad Request')
+      message = JSON.parse(response.body, symbolize_names: true)
+      expect(message[:data][:message]).to eq("well thats not right, try something different")
+    end
+
+  end
+  describe 'contractors show' do
+    it 'can get a single contractors information' do
+      user = User.create!(name: 'Rich',
+                 city: 'Cumberland',
+                 address: '123 fake st',
+                 phone: '123456',
+                 email: 'email@email.com',
+                 inspector: false)
+                 get "/api/v1/contractors/#{user.id}"
+      expect(response).to be_successful
+      contractor = JSON.parse(response.body, symbolize_names: true)
+      binding.pry
     end
   end
 end
