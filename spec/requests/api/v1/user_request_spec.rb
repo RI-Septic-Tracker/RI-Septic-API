@@ -83,7 +83,19 @@ RSpec.describe 'User Requests' do
                  get "/api/v1/contractors/#{user.id}"
       expect(response).to be_successful
       contractor = JSON.parse(response.body, symbolize_names: true)
-      binding.pry
+      expect(response).to be_successful
+      expect(contractor).to be_a Hash
+      expect(contractor).to have_key(:data)
+      expect(contractor[:data]).to have_key(:id)
+      expect(contractor[:data][:id]).to eq(user.id.to_s)
+      expect(contractor[:data][:type]).to eq("user")
+      expect(contractor[:data][:attributes]).to have_key(:name)
+      expect(contractor[:data][:attributes][:name]).to eq(user.name)
+      expect(contractor[:data][:attributes]).to have_key(:city)
+      expect(contractor[:data][:attributes]).to have_key(:phone)
+      expect(contractor[:data][:attributes][:phone]).to eq(user.phone)
+      expect(contractor[:data][:attributes]).to have_key(:email)
+      expect(contractor[:data][:attributes][:email]).to eq(user.email)
     end
   end
 end

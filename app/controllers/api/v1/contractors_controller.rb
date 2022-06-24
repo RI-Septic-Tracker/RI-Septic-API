@@ -12,6 +12,11 @@ module Api
           render json: { data: { message: 'well thats not right, try something different' } }, status: :bad_request
         end
       end
+
+      def show
+        contractor = User.find(params[:id])
+        render json: UserSerializer.new(contractor)
+      end
     end
   end
 end
