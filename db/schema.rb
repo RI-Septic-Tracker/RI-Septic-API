@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # rubocop:disable all
 
 # This file is auto-generated from the current state of the database. Instead
