@@ -12,13 +12,13 @@ RSpec.describe 'User Requests' do
                    address: '123 fake st',
                    phone: '123456',
                    email: 'email@email.com',
-                   inspector: false)
+                   inspector: false, password: "password", password_confirmation: "password")
       User.create!(name: 'Charlie',
                    city: 'Cumberland',
                    address: '111  different fake st',
                    phone: '123456345',
                    email: 'email22@email.com',
-                   inspector: false)
+                   inspector: false, password: "password", password_confirmation: "password")
       get '/api/v1/contractors'
       expect(response).to be_successful
       contractors = JSON.parse(response.body, symbolize_names: true)
@@ -44,19 +44,19 @@ RSpec.describe 'User Requests' do
                    address: '123 fake st',
                    phone: '123456',
                    email: 'email@email.com',
-                   inspector: false)
+                   inspector: false, password: "password", password_confirmation: "password")
       User.create!(name: 'Charlie',
                    city: 'Cumberland',
                    address: '111  different fake st',
                    phone: '123456345',
                    email: 'email22@email.com',
-                   inspector: false)
+                   inspector: false, password: "password", password_confirmation: "password")
       User.create!(name: 'Alan',
                    city: 'Foster',
                    address: '111 second different fake st',
                    phone: '123456345',
                    email: 'email44@email.com',
-                   inspector: true)
+                   inspector: true, password: "password", password_confirmation: "password")
       get '/api/v1/contractors'
       expect(response).to be_successful
       contractors = JSON.parse(response.body, symbolize_names: true)
@@ -79,7 +79,7 @@ RSpec.describe 'User Requests' do
                  address: '123 fake st',
                  phone: '123456',
                  email: 'email@email.com',
-                 inspector: false)
+                 inspector: false, password: "password", password_confirmation: "password")
                  get "/api/v1/contractors/#{user.id}"
       expect(response).to be_successful
       contractor = JSON.parse(response.body, symbolize_names: true)
