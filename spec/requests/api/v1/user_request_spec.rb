@@ -98,4 +98,30 @@ RSpec.describe 'User Requests' do
       expect(contractor[:data][:attributes][:email]).to eq(user.email)
     end
   end
+
+  describe 'registering a new user' do
+    it 'can register a new user'  do
+      data = {
+        "email": "whatever@example.com",
+        "city": "somecity",
+        "address": "123 fake st",
+        "phone":"11231234",
+        "password": "password",
+        "password_confirmation": "password"
+      }
+      headers = { 'CONTENT_TYPE' => 'application/json', "Accept" => 'application/json'}
+      post '/api/v1/contractors', headers: headers, params: JSON.generate(data)
+      reply = JSON.parse(response.body, symbolize_names: true)
+      expect(reply).to be_a Hash
+      expect(reply).to have_key(:data)
+      expect(reply[:data]).to have_key(:id)
+      expect(reply[:data]).to have_key(:type)
+      expect(reply[:data]).to have_key(:attributes)
+      expect(reply[:data][:type]).to eq("user")
+      expect(reply[:data][:attributes]).to have_key(:name)
+      expect(reply[:data][:attributes]).to have_key(:city)
+      expect(reply[:data][:attributes]).to have_key(:phone)
+      expect(reply[:data][:attributes]).to have_key(:email)
+    end
+  end
 end
