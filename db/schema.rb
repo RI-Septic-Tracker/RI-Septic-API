@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-# rubocop:disable all
+#rubocop:disable all
 
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
@@ -13,7 +13,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_220_610_200_201) do
+ActiveRecord::Schema.define(version: 20_220_628_010_158) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -53,8 +53,9 @@ ActiveRecord::Schema.define(version: 20_220_610_200_201) do
     t.string 'email'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.string 'inspector'
     t.string 'name'
+    t.string 'password_digest'
+    t.integer 'role', default: 0
   end
 
   add_foreign_key 'test_holes', 'properties'

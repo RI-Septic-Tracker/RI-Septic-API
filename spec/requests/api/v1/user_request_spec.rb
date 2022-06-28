@@ -12,13 +12,13 @@ RSpec.describe 'User Requests' do
                    address: '123 fake st',
                    phone: '123456',
                    email: 'email@email.com',
-                   inspector: false)
+                   role: 'contractor', password: "password", password_confirmation: "password")
       User.create!(name: 'Charlie',
                    city: 'Cumberland',
                    address: '111  different fake st',
                    phone: '123456345',
                    email: 'email22@email.com',
-                   inspector: false)
+                   role: 'contractor', password: "password", password_confirmation: "password")
       get '/api/v1/contractors'
       expect(response).to be_successful
       contractors = JSON.parse(response.body, symbolize_names: true)
@@ -44,19 +44,19 @@ RSpec.describe 'User Requests' do
                    address: '123 fake st',
                    phone: '123456',
                    email: 'email@email.com',
-                   inspector: false)
+                   role: "contractor", password: "password", password_confirmation: "password")
       User.create!(name: 'Charlie',
                    city: 'Cumberland',
                    address: '111  different fake st',
                    phone: '123456345',
                    email: 'email22@email.com',
-                   inspector: false)
+                   role: 'contractor', password: "password", password_confirmation: "password")
       User.create!(name: 'Alan',
                    city: 'Foster',
                    address: '111 second different fake st',
                    phone: '123456345',
                    email: 'email44@email.com',
-                   inspector: true)
+                   role: 'inspector', password: "password", password_confirmation: "password")
       get '/api/v1/contractors'
       expect(response).to be_successful
       contractors = JSON.parse(response.body, symbolize_names: true)
@@ -79,7 +79,7 @@ RSpec.describe 'User Requests' do
                  address: '123 fake st',
                  phone: '123456',
                  email: 'email@email.com',
-                 inspector: false)
+                 role: :contractor, password: "password", password_confirmation: "password")
                  get "/api/v1/contractors/#{user.id}"
       expect(response).to be_successful
       contractor = JSON.parse(response.body, symbolize_names: true)
@@ -96,6 +96,33 @@ RSpec.describe 'User Requests' do
       expect(contractor[:data][:attributes][:phone]).to eq(user.phone)
       expect(contractor[:data][:attributes]).to have_key(:email)
       expect(contractor[:data][:attributes][:email]).to eq(user.email)
+    end
+  end
+
+  describe 'registering a new user' do
+    it 'can register a new user'  do
+      data = {
+        "name": "David",
+        "email": "whatever@example.com",
+        "city": "somecity",
+        "address": "123 fake st",
+        "phone":"11231234",
+        "password": "password",
+        "password_confirmation": "password"
+      }
+      headers = { 'CONTENT_TYPE' => 'application/json', "Accept" => 'application/json'}
+      post '/api/v1/contractors', headers: headers, params: JSON.generate(data)
+      reply = JSON.parse(response.body, symbolize_names: true)
+      expect(reply).to be_a Hash
+      expect(reply).to have_key(:data)
+      expect(reply[:data]).to have_key(:id)
+      expect(reply[:data]).to have_key(:type)
+      expect(reply[:data]).to have_key(:attributes)
+      expect(reply[:data][:type]).to eq("user")
+      expect(reply[:data][:attributes]).to have_key(:name)
+      expect(reply[:data][:attributes]).to have_key(:city)
+      expect(reply[:data][:attributes]).to have_key(:phone)
+      expect(reply[:data][:attributes]).to have_key(:email)
     end
   end
 end

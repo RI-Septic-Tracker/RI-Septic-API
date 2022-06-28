@@ -5,7 +5,7 @@ module Api
     # controller for contractor users
     class ContractorsController < ApplicationController
       def index
-        users = User.where(inspector: false)
+        users = User.where(role: 'contractor')
         if users != []
           render json: UserSerializer.new(users)
         else
@@ -16,6 +16,18 @@ module Api
       def show
         contractor = User.find(params[:id])
         render json: UserSerializer.new(contractor)
+      end
+
+      def create
+        user = User.create!(contractor_params)
+        render json: UserSerializer.new(user)
+        # binding.pry
+      end
+
+      private
+
+      def contractor_params
+        params.require(:contractor).permit(:name, :email, :password, :city, :address, :phone)
       end
     end
   end
