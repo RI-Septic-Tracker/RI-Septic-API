@@ -102,6 +102,7 @@ RSpec.describe 'User Requests' do
   describe 'registering a new user' do
     it 'can register a new user'  do
       data = {
+        "name": "David",
         "email": "whatever@example.com",
         "city": "somecity",
         "address": "123 fake st",

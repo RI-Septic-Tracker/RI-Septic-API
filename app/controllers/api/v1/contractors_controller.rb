@@ -17,6 +17,15 @@ module Api
         contractor = User.find(params[:id])
         render json: UserSerializer.new(contractor)
       end
+
+      def create
+        User.create!(contractor_params)
+        binding.pry
+      end
+      private
+      def contractor_params
+        params.require(:contractor).permit(:email, :password, :city, :address, :phone)
+      end
     end
   end
 end
