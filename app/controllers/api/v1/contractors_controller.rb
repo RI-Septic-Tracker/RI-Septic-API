@@ -23,7 +23,9 @@ module Api
         render json: UserSerializer.new(user)
         # binding.pry
       end
+
       private
+
       def contractor_params
         params.require(:contractor).permit(:name, :email, :password, :city, :address, :phone)
       end
