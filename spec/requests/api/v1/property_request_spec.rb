@@ -16,6 +16,7 @@ RSpec.describe 'Property Requests' do
       headers = { 'CONTENT_TYPE' => 'application/json', "Accept" => 'application/json'}
       post '/api/v1/properties', headers: headers, params: JSON.generate(data)
       reply = JSON.parse(response.body, symbolize_names: true)
+      binding.pry
     end
   end
 end
