@@ -2,7 +2,8 @@ module Api
   module V1
     class PropertiesController < ApplicationController
       def create
-        Property.create!(property_params)
+        prop = Property.create!(property_params)
+        render json: PropertySerializer.new(prop)
       end
       private
       def property_params
