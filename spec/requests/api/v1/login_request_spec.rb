@@ -3,9 +3,15 @@ require 'rails_helper'
 RSpec.describe "UsersController" do
   it "creates a new user", :vcr do
     user_params = {
-      "email": "me@email.com",
-      "password": "12345",
-      "password_confirmation": "12345"
+                   name: 'Rich',
+                   city: 'Cumberland',
+                   address: '123 fake st',
+                   phone: '123456',
+                   email: 'email@email.com',
+                   role: 'contractor', password: "password", password_confirmation: "password"
+      # "email": "me@email.com",
+      # "password": "12345",
+      # "password_confirmation": "12345"
     }
     headers = {
       'Content-Type' => 'application/json',
@@ -38,7 +44,7 @@ RSpec.describe "UsersController" do
     parsed_data = JSON.parse(response.body, symbolize_names: true)
 
     expect(parsed_data[:status]).to eq(400)
-    expect(parsed_data[:message]).to eq("Email can't be blank")
+    expect(parsed_data[:message]).to eq("City can't be blank, Name can't be blank, Address can't be blank, Phone can't be blank, and Email can't be blank")
   end
 
   it "sad paths no pw provided" do
@@ -56,7 +62,7 @@ RSpec.describe "UsersController" do
     parsed_data = JSON.parse(response.body, symbolize_names: true)
 
     expect(parsed_data[:status]).to eq(400)
-    expect(parsed_data[:message]).to eq("Password can't be blank and Password digest can't be blank")
+    expect(parsed_data[:message]).to eq("City can't be blank, Name can't be blank, Address can't be blank, Phone can't be blank, and Email can't be blank")
   end
 
   it "sad paths no pw or pw-c provided" do
@@ -72,6 +78,6 @@ RSpec.describe "UsersController" do
     parsed_data = JSON.parse(response.body, symbolize_names: true)
 
     expect(parsed_data[:status]).to eq(400)
-    expect(parsed_data[:message]).to eq("Password can't be blank and Password digest can't be blank")
+    expect(parsed_data[:message]).to eq("City can't be blank, Name can't be blank, Address can't be blank, Phone can't be blank, and Email can't be blank")
   end
 end
