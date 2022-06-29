@@ -15,8 +15,13 @@ RSpec.describe "UsersController" do
 
   it "creates a new user", :vcr do
     user_params = {
+                  'name': "mitch",
+                  'city': 'cityplace',
+                  'phone': '1234232',
                   'email': 'email@email.com',
-                  'password': "password"
+                  'role': 'contractor',
+                  'password': "password",
+                  'password_confirmation': 'password'
     }
     headers = {
       'Content-Type' => 'application/json',
@@ -54,9 +59,9 @@ RSpec.describe "UsersController" do
 
   it "sad paths no pw provided" do
     user_params = {
-      "email": "me@email.com",
+      "email": "email@email.com",
 
-      "password_confirmation": "12345"
+      "password_confirmation": "password"
     }
     headers = {
       'Content-Type' => 'application/json',
@@ -72,7 +77,7 @@ RSpec.describe "UsersController" do
 
   it "sad paths no pw or pw-c provided" do
     user_params = {
-      "email": "me@email.com"
+      "email": "email@email.com"
     }
     headers = {
       'Content-Type' => 'application/json',
