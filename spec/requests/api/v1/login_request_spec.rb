@@ -3,8 +3,8 @@ require 'pry'
 
 RSpec.describe "UsersController" do
   before(:each) do
-   @user = User.create!(name: 'Rich',
-      city: 'Cumberland',
+   @user = User.create!(name: 'mitch',
+      city: 'cityplace',
       address: '123 fake st',
       phone: '123456',
       email: 'email@email.com',
@@ -17,7 +17,8 @@ RSpec.describe "UsersController" do
     user_params = {
                   'name': "mitch",
                   'city': 'cityplace',
-                  'phone': '1234232',
+                  'address': '123 fake st',
+                  'phone': '123456',
                   'email': 'email@email.com',
                   'role': 'contractor',
                   'password': "password",
@@ -30,7 +31,7 @@ RSpec.describe "UsersController" do
 
     post '/api/v1/users', headers: headers, params: user_params.to_json
     parsed_data = JSON.parse(response.body, symbolize_names: true)
-
+    binding.pry
     expect(response.status).to eq(201)
     expect(parsed_data[:data]).to have_key(:id)
     expect(parsed_data[:data]).to have_key(:type)
