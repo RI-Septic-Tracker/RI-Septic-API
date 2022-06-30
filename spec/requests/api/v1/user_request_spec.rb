@@ -144,7 +144,7 @@ RSpec.describe 'User Requests' do
     end
 
     xit 'returns and error for duplicated emails' do
-      user = User.create!(address:"234fda",phone:"1341234" city:"somecity",name:"steve",email: "whatever@example.com", password: "password", password_confirmation: "password")
+      user = User.create!(address:"234fda",phone:"1341234", city:"somecity",name:"steve",email: "whatever@example.com", password: "password", password_confirmation: "password")
       data = {
         "name": "David",
         "email": "whatever@example.com",
