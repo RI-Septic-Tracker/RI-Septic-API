@@ -20,7 +20,6 @@ module Api
 
       def create
         user = User.create!(contractor_params)
-        binding.pry
         render json: UserSerializer.new(user)
       end
 
