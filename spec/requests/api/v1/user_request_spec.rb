@@ -144,10 +144,16 @@ RSpec.describe 'User Requests' do
     end
 
     xit 'returns and error for duplicated emails' do
-      user = User.create!(email: "useremail@email.com", password: "password", password_confirmation: "password")
-      data = { "email": "useremail@email.com",
-            "password": "password",
-            "password_confirmation": "password"}
+      user = User.create!(address:"234fda",phone:"1341234" city:"somecity",name:"steve",email: "whatever@example.com", password: "password", password_confirmation: "password")
+      data = {
+        "name": "David",
+        "email": "whatever@example.com",
+        "city": "somecity",
+        "address": "123 fake st",
+        "phone":"11231234",
+        "password": "password",
+        "password_confirmation": "password"
+      }
       headers = { 'CONTENT_TYPE' => 'application/json', "Accept" => 'application/json'}
       post '/api/v1/users', headers: headers, params: JSON.generate(data)
       reply = JSON.parse(response.body, symbolize_names: true)
@@ -158,9 +164,15 @@ RSpec.describe 'User Requests' do
     end
 
     xit 'handles other errors' do
-      data = { "email": nil,
-            "password": nil,
-            "password_confirmation": nil}
+      data = {
+        "name": nil,
+        "email": nil,
+        "city": nil,
+        "address": nil,
+        "phone":nil,
+        "password": nil,
+        "password_confirmation": nil
+      }
       headers = { 'CONTENT_TYPE' => 'application/json', "Accept" => 'application/json'}
       post '/api/v1/users', headers: headers, params: JSON.generate(data)
       reply = JSON.parse(response.body, symbolize_names: true)
