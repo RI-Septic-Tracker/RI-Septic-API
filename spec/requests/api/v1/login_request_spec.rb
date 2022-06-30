@@ -13,31 +13,24 @@ RSpec.describe "UsersController" do
       password_confirmation: "password")
   end
 
-  it "creates a new user", :vcr do
+  it "Logs in user", :vcr do
     user_params = {
-                  'name': "mitch",
-                  'city': 'cityplace',
-                  'address': '123 fake st',
-                  'phone': '123456',
-                  'email': 'email@email.com',
-                  'role': 'contractor',
-                  'password': "password",
-                  'password_confirmation': 'password'
+                  'email': "#{@user.email}",
+                  'password': 'password'
     }
     headers = {
       'Content-Type' => 'application/json',
       'Accept' => 'application/json'
     }
 
-    post '/api/v1/users', headers: headers, params: user_params.to_json
+    get '/api/v1/users', headers: headers, params: user_params.to_json
     parsed_data = JSON.parse(response.body, symbolize_names: true)
-    binding.pry
     expect(response.status).to eq(201)
     expect(parsed_data[:data]).to have_key(:id)
     expect(parsed_data[:data]).to have_key(:type)
     expect(parsed_data[:data]).to have_key(:attributes)
     expect(parsed_data[:data][:attributes]).to have_key(:email)
-    expect(parsed_data[:data][:attributes]).to have_key(:api_key)
+    #expect(parsed_data[:data][:attributes]).to have_key(:api_key)
   end
 
   it "sad paths no email provided" do
@@ -51,11 +44,11 @@ RSpec.describe "UsersController" do
       'Accept' => 'application/json'
     }
 
-    post '/api/v1/users', headers: headers, params: user_params.to_json
+    get '/api/v1/users', headers: headers, params: user_params.to_json
     parsed_data = JSON.parse(response.body, symbolize_names: true)
 
     expect(parsed_data[:status]).to eq(400)
-    expect(parsed_data[:message]).to eq("City can't be blank, Name can't be blank, Address can't be blank, Phone can't be blank, and Email can't be blank")
+    expect(parsed_data[:message]).to eq("Email can't be blank")
   end
 
   it "sad paths no pw provided" do
@@ -69,7 +62,7 @@ RSpec.describe "UsersController" do
       'Accept' => 'application/json'
     }
 
-    post '/api/v1/users', headers: headers, params: user_params.to_json
+    get '/api/v1/users', headers: headers, params: user_params.to_json
     parsed_data = JSON.parse(response.body, symbolize_names: true)
 
     expect(parsed_data[:status]).to eq(400)
@@ -85,7 +78,7 @@ RSpec.describe "UsersController" do
       'Accept' => 'application/json'
     }
 
-    post '/api/v1/users', headers: headers, params: user_params.to_json
+    get '/api/v1/users', headers: headers, params: user_params.to_json
     parsed_data = JSON.parse(response.body, symbolize_names: true)
 
     expect(parsed_data[:status]).to eq(400)
