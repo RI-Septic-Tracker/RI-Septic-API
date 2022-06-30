@@ -124,5 +124,48 @@ RSpec.describe 'User Requests' do
       expect(reply[:data][:attributes]).to have_key(:phone)
       expect(reply[:data][:attributes]).to have_key(:email)
     end
+    it 'returns a an error for missmatched passwords' do
+      data = {
+        "name": "David",
+        "email": "whatever@example.com",
+        "city": "somecity",
+        "address": "123 fake st",
+        "phone":"11231234",
+        "password": "password",
+        "password_confirmation": "paasdfssword"
+      }
+      headers = { 'CONTENT_TYPE' => 'application/json', "Accept" => 'application/json'}
+      post '/api/v1/contractors', headers: headers, params: JSON.generate(data)
+      reply = JSON.parse(response.body, symbolize_names: true)
+      expect(response.status).to eq(400)
+      expect(reply).to have_key(:data)
+      expect(reply[:data]).to have_key(:message)
+      expect(reply[:data][:message]).to eq("passwords do not match")
+    end
+
+    xit 'returns and error for duplicated emails' do
+      user = User.create!(email: "useremail@email.com", password: "password", password_confirmation: "password")
+      data = { "email": "useremail@email.com",
+            "password": "password",
+            "password_confirmation": "password"}
+      headers = { 'CONTENT_TYPE' => 'application/json', "Accept" => 'application/json'}
+      post '/api/v1/users', headers: headers, params: JSON.generate(data)
+      reply = JSON.parse(response.body, symbolize_names: true)
+      expect(response.status).to eq(400)
+      expect(reply).to have_key(:data)
+      expect(reply[:data]).to have_key(:message)
+      expect(reply[:data][:message]).to eq("that email already exists")
+    end
+
+    xit 'handles other errors' do
+      data = { "email": nil,
+            "password": nil,
+            "password_confirmation": nil}
+      headers = { 'CONTENT_TYPE' => 'application/json', "Accept" => 'application/json'}
+      post '/api/v1/users', headers: headers, params: JSON.generate(data)
+      reply = JSON.parse(response.body, symbolize_names: true)
+      expect(response.status).to eq(400)
+      expect(reply[:data][:message]).to eq("unable to create user")
+    end
   end
 end
