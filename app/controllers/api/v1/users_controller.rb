@@ -12,11 +12,17 @@ class Api::V1::UsersController < ApplicationController
     end
 
     def index
-      user = User.find_by(user_params)
-      if user.save
-        render(json: UserSerializer.new(user), status: :created)
+      @user = User.find_by(user_params)
+      #binding.pry
+      if !@user
+        render(json: {status: 400, message: "error with log in", data: @user.errors}, status: :bad_request)
       else
-        render(json: {status: 400, message: "#{user.errors.full_messages.to_sentence}", data: user.errors}, status: :bad_request)
+        if @user.authenticate(params[:password]) == true
+          binding.pry
+          render(json: UserSerializer.new(@user), status: :created)
+        elsif @user.authenticate(params[:password]) == false
+          render(json: {status: 400, message: "error with log in", data: @user.errors}, status: :bad_request)         
+        end
       end
     end
     
