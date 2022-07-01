@@ -23,7 +23,8 @@ RSpec.describe "UsersController" do
       'Accept' => 'application/json'
     }
 
-    get '/api/v1/users', headers: headers, params: user_params.to_json
+    post '/api/v1/login', headers: headers, params: user_params.to_json
+    #binding.pry
     parsed_data = JSON.parse(response.body, symbolize_names: true)
     expect(response.status).to eq(201)
     expect(parsed_data[:data]).to have_key(:id)
@@ -44,11 +45,11 @@ RSpec.describe "UsersController" do
       'Accept' => 'application/json'
     }
 
-    get '/api/v1/users', headers: headers, params: user_params.to_json
+    post '/api/v1/login', headers: headers, params: user_params.to_json
     parsed_data = JSON.parse(response.body, symbolize_names: true)
 
     expect(parsed_data[:status]).to eq(400)
-    expect(parsed_data[:message]).to eq("error with log in")
+    expect(parsed_data[:message]).to eq("No user Found")
   end
 
   it "sad paths no pw provided" do
@@ -62,11 +63,11 @@ RSpec.describe "UsersController" do
       'Accept' => 'application/json'
     }
 
-    get '/api/v1/users', headers: headers, params: user_params.to_json
+    post '/api/v1/users', headers: headers, params: user_params.to_json
     parsed_data = JSON.parse(response.body, symbolize_names: true)
 
     expect(parsed_data[:status]).to eq(400)
-    expect(parsed_data[:message]).to eq("error with log in")
+    expect(parsed_data[:message]).to eq("Password can't be blank, City can't be blank, Name can't be blank, Address can't be blank, and Phone can't be blank")
   end
 
   it "sad paths no pw or pw-c provided" do
@@ -78,10 +79,10 @@ RSpec.describe "UsersController" do
       'Accept' => 'application/json'
     }
 
-    get '/api/v1/users', headers: headers, params: user_params.to_json
+    post '/api/v1/login', headers: headers, params: user_params.to_json
     parsed_data = JSON.parse(response.body, symbolize_names: true)
 
     expect(parsed_data[:status]).to eq(400)
-    expect(parsed_data[:message]).to eq("error with log in")
+    expect(parsed_data[:message]).to eq("Credentials do not match")
   end
 end
