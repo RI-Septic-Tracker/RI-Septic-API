@@ -21,13 +21,12 @@ module Api
       def create
         user = User.create!(contractor_params)
         render json: UserSerializer.new(user)
-        # binding.pry
       end
 
       private
 
       def contractor_params
-        params.require(:contractor).permit(:name, :email, :password, :city, :address, :phone)
+        params.require(:contractor).permit(:name, :email, :password, :password_confirmation, :city, :address, :phone)
       end
     end
   end
