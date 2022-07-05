@@ -20,7 +20,20 @@ RSpec.describe "testhole requests" do
               headers = { 'CONTENT_TYPE' => 'application/json', "Accept" => 'application/json'}
               post '/api/v1/testholes', headers: headers, params: JSON.generate(data)
               reply = JSON.parse(response.body, symbolize_names: true)
-
+              expect(reply).to be_a Hash
+              expect(reply).to have_key(:data)
+              expect(reply[:data]).to have_key(:id)
+              expect(reply[:data]).to have_key(:type)
+              expect(reply[:data]).to have_key(:attributes)
+              expect(reply[:data][:attributes]).to have_key(:property_id)
+              expect(reply[:data][:attributes]).to have_key(:shwt)
+              expect(reply[:data][:attributes]).to have_key(:ledge_depth)
+              expect(reply[:data][:attributes]).to have_key(:notes)
+              expect(reply[:data][:attributes]).to have_key(:inspector_present)
+              expect(reply[:data][:attributes]).to have_key(:date)
+              expect(reply[:data][:attributes]).to have_key(:load_rate)
+              expect(reply[:data][:attributes]).to have_key(:created_at)
+              expect(reply[:data][:attributes]).to have_key(:updated_at)
     end
   end
 end

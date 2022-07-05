@@ -4,11 +4,8 @@ module Api
     class TestholesController < ApplicationController
       def create
         th = TestHole.new(testhole_params)
-        binding.pry
           if th.save
             render(json: TestHoleSerializer.new(th), status: :created)
-          else
-            binding.pry
           end
       end
 
