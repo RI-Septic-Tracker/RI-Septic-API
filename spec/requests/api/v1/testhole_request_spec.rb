@@ -12,9 +12,10 @@ RSpec.describe "testhole requests" do
               "property_id": "#{prop.id}",
               "shwt": "36",
               "notes": "large tree nearby",
-              "Date": "7/5/2022",
+              "date": "2022-7-5",
               "inspector_present": "true",
-              "ledge_depth": "999"
+              "ledge_depth": "999",
+              "load_rate": "0.7"
               }
               headers = { 'CONTENT_TYPE' => 'application/json', "Accept" => 'application/json'}
               post '/api/v1/testholes', headers: headers, params: JSON.generate(data)
