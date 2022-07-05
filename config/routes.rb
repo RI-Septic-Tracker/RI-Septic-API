@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       post '/login', to:'users#login'
       resources :users, only: %i[index create show]
       resources :properties, only: %i[create]
+      resources :testholes, only: %i[create]
     end
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-Rspec.describe "testhole requests" do
+RSpec.describe "testhole requests" do
   describe 'test hole post requests' do
     it 'posts a new test hole' do
       prop = Property.create!(
