@@ -35,3 +35,29 @@ Tech.create!(brand: "Eljin",
             model: "B43",
             sqft: "28",
             unit: "pad")
+Tech.create!(brand: "GeoMatrix",
+            model: "GST6218",
+            sqft: "24.8",
+            unit: "ft")
+prop1 = Property.create!(city: "cumberland",
+                        street: "havens",
+                        num: 123,
+                        bedrooms: 3)
+prop2 = Property.create!(city: "lincoln",
+                        street: "front",
+                        num: 123,
+                        bedrooms: 2)
+TestHole.create!(property_id: prop1.id,
+                shwt: 36,
+                ledge_depth: 80,
+                notes: "has notes",
+                inspector_present: true,
+                date: '2022/7/5',
+                load_rate: 0.7)
+TestHole.create!(property_id: prop2.id,
+                shwt: 36,
+                ledge_depth: 80,
+                notes: "has notes",
+                inspector_present: true,
+                date: '2022/7/5',
+                load_rate: 0.4)
