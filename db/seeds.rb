@@ -12,10 +12,26 @@ User.create!(name: 'Rich',
              address: '123 fake st',
              phone: '123456',
              email: 'email@email.com',
-             inspector: false)
+             role: 'contractor',
+            password: "password",
+            password_confirmation: "password")
 User.create!(name: 'Charlie',
              city: 'Cumberland',
              address: '111  different fake st',
              phone: '123456345',
              email: 'email22@email.com',
-             inspector: false)
+             role: 'contractor',
+            password: "password",
+            password_confirmation: "password")
+User.create!(name: 'Alan',
+             city: 'Foster',
+             address: '111 some different fake st',
+             phone: '123456345',
+             email: 'email33@email.com',
+             role: 'inspector',
+            password: "password",
+            password_confirmation: "password")
+Tech.create!(brand: "Eljin",
+            model: "B43",
+            sqft: "28",
+            unit: "pad")
