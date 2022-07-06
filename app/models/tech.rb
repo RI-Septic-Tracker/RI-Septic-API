@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Tech < ApplicationRecord
   validates_presence_of :brand
   validates_presence_of :model

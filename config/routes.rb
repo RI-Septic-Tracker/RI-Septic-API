@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :contractors, only: %i[index show create]
-      post '/login', to:'users#login'
+      post '/login', to: 'users#login'
       resources :users, only: %i[index create show]
       resources :properties, only: %i[create]
       resources :testholes, only: %i[create]
